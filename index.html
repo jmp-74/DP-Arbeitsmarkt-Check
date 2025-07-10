@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D+P Arbeitsmarkt Analyse-Tool</title>
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Externe Bibliotheken für die PDF-Funktionalität -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+
+</head>
+<body>
+
+    <div id="app-container">
+        <!-- Ansicht 1: Dashboard -->
+        <div id="dashboard-view">
+            <header class="dashboard-header">
+                <h1>D+P Arbeitsmarkt Analyse-Tool</h1>
+                <div class="controls">
+                    <input type="text" id="search-input" placeholder="Standort suchen...">
+                    <button id="sort-by-name" class="sort-btn">Nach Name</button>
+                    <button id="sort-by-jobs" class="sort-btn">Nach Stellen</button>
+                </div>
+            </header>
+            <main class="dashboard-main">
+                <div id="map-container">
+                    <!-- Die Karte wird hier per JavaScript geladen -->
+                </div>
+                <div id="location-list-container">
+                    <div class="list-header">
+                        <span>Standort</span>
+                        <span>Offene Stellen</span>
+                        <span>Aktion</span>
+                    </div>
+                    <div id="location-list">
+                        <!-- Die Liste wird hier per JavaScript gefüllt -->
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <!-- Ansicht 2: Analyse -->
+        <div id="analysis-view" style="display:none;">
+            <h2 id="analysis-header"></h2>
+            <div id="progress-container">
+                <div id="progress-bar-background">
+                    <div id="progress-bar"></div>
+                </div>
+                <p id="progress-text"></p>
+            </div>
+            <div id="step-content">
+                <!-- Der Inhalt der Analyseschritte wird hier angezeigt -->
+            </div>
+            <div id="analysis-controls">
+                <button id="back-to-dashboard-btn">Zurück zum Dashboard</button>
+                <button id="prev-btn" title="Zurück">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+                </button>
+                <!-- KORREKTUR: Neuer Button für die Vorlesefunktion -->
+                <button id="read-aloud-btn" title="Bericht vorlesen" style="display:none;">
+                    <svg class="play-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                    <svg class="stop-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="display:none;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-12h2v8h-2V8z"/></svg>
+                </button>
+                <button id="next-btn" title="Weiter">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+                </button>
+                <button id="save-btn" style="display:none;">PDF Speichern</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal für den PDF-Upload -->
+    <div id="upload-modal" style="display:none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-location-name"></h2>
+                <button id="close-modal-btn">&times;</button>
+            </div>
+            <p>Laden Sie den aktuellen Arbeitsmarktbericht (PDF) hoch, um die Daten zu aktualisieren.</p>
+            <input type="file" id="pdf-upload-input" accept=".pdf" style="display:none;">
+            <label for="pdf-upload-input" class="upload-label">
+                <svg viewBox="0 0 24 24"><path d="M9 16h6v-6h4l-7-7-7 7h4v6zm-4 2h14v2H5v-2z"/></svg>
+                PDF-Datei auswählen
+            </label>
+            <div id="upload-status"></div>
+        </div>
+    </div>
+    
+    <div id="spinner" class="spinner" style="display:none;"></div>
+
+    <!-- Unser Haupt-Skript -->
+    <script src="script.js" type="module"></script>
+
+</body>
+</html>
